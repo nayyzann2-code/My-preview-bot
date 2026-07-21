@@ -8,7 +8,7 @@ from telegram.ext import (
 )
 
 # Bot Token ကို ဒီနေရာမှာ ထည့်ပါ
-TOKEN = "8954957485:port t"
+TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
 
 # User တွေရဲ့ ကြည့်ရှုမှုမှတ်တမ်းကို သိမ်းရန်
 user_history = {}
