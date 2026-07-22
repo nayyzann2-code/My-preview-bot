@@ -60,7 +60,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode="Markdown"
             )
 
-        # ----------------- ဇာတ်ကား (၂) : အသစ် -----------------
+        # ----------------- ဇာတ်ကား (၂) : Lucifer -----------------
         elif data == "m2":
             keyboard = [
                 [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m2_ep1")],
@@ -135,12 +135,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        # ----------------- ဇာတ်ကား (၂) ဗီဒီယိုများ -----------------
+        # ----------------- ဇာတ်ကား (၂) : Lucifer ဗီဒီယိုများ -----------------
         elif data == "m2_ep1":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="BAACAgUAAxkBAAEgusVqYH9ML8Wz_1g885Oau3MBQAZ5dgACGxkAAlnEgFQsmJuyY9nHzD0E",
-                caption="🎬 Lucifer (2016)- အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+                caption="🎬 Lucifer (2016) - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
@@ -167,11 +167,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption="🎬 Lucifer (2016) - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
-         elif data == "m2_ep5":
+
+        elif data == "m2_ep5":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="BAACAgUAAxkBAAEgutVqYICU0yb2rG2-ux8vEEgAAeO5IrgAApYZAAJZxIBULyCSzraSoIM9BA",
-                caption="🎬 Lucifer (2016)- အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+                caption="🎬 Lucifer (2016) - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
@@ -179,11 +180,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="BAACAgUAAxkBAAEgutdqYIDNUzAzxQdGBqkH5AM0-gQIkAACnhkAAlnEgFSZ92iCDLoVuj0E",
-                caption="🎬 Lucifer (2016)- အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+                caption="🎬 Lucifer (2016) - အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-                # ----------------- VIP အပိုင်းများ -----------------
+        # ----------------- VIP အပိုင်းများ -----------------
         elif data == "vip_locked":
             keyboard = [
                 [InlineKeyboardButton("💬 မန်ဘာဝင်ရန် ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
@@ -198,7 +199,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
-
             
     except Exception as e:
         await query.message.reply_text(f"⚠️ Error: {str(e)}")
@@ -219,3 +219,4 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button_handler))
     print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
+            
