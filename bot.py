@@ -12,11 +12,17 @@ CONTACT_USERNAME = "@naywww01"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("🎬 The Flash (2014)", callback_data="m1")]
+        [InlineKeyboardButton("🎬 The Flash (2014) season 1 to 9", callback_data="m1")],
+        [InlineKeyboardButton("🎬 Lucifer (2016) season 1 to 6", callback_data="m2")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text(
-        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားကို နှိပ်၍ အပိုင်းများကို ရွေးချယ်နိုင်ပါသည် -",
+    
+    await update.message.reply_photo(
+        photo="AgACAgUAAxkBAAEgueJqYFrWN-knIvOwmsOQ859SgDB3eQACUxVrG9u7CFdtu8B_Lb_nPQEAAwIAA3gAAz0E",
+        caption=(
+            "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\n"
+            "အောက်ပါ ဇာတ်ကားများကို နှိပ်၍ အပိုင်းများကို ရွေးချယ်နိုင်ပါသည် -"
+        ),
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
@@ -27,70 +33,101 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     data = query.data
     try:
+        # ----------------- ဇာတ်ကား (၁) : The Flash -----------------
         if data == "m1":
             keyboard = [
-                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="ep_1")],
-                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="ep_2")],
-                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="ep_3")],
-                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="ep_4")],
-                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="ep_5")],
-                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="ep_6")],
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m1_ep1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m1_ep2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m1_ep3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m1_ep4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m1_ep5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m1_ep6")],
                 [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
-            await query.message.reply_text(
-                "📌 **The Flash (2014)**\n"
-                "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
-                "• အပိုင်းအသစ်များနှင့် ကျန်အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n\n"
-                "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -",
+            await query.message.reply_photo(
+                photo="AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3cAAz0E",
+                caption=(
+                    "📌 **The Flash (2014) season 1 to 9**\n"
+                    "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
+                    "• မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်**\n"
+                    "• အပိုင်းအသစ်များနှင့် ကျန်အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n\n"
+                    "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -"
+                ),
                 reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
 
-        # အပိုင်း (၁) မှ (၆) အထိ File ID များကို ဤနေရာတွင် ထည့်ပါ 👇
-        elif data == "ep_1":
+        # ----------------- ဇာတ်ကား (၂) : Lucifer -----------------
+        elif data == "m2":
+            keyboard = [
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m2_ep1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m2_ep2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m2_ep3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m2_ep4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m2_ep5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m2_ep6")],
+                [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.message.reply_photo(
+                photo="AgACAgUAAxkBAAEguktqYGtKcwc5Lz0a-uvM011zR6ouQQACrBJrG-62aFXF-kV2rfK7_gEAAwIAA3cAAz0E",
+                caption=(
+                    "📌 **Lucifer (2016) season 1 to 6**\n"
+                    "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
+                    "• မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်**\n\n"
+                    "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -"
+                ),
+                reply_markup=reply_markup,
+                parse_mode="Markdown"
+            )
+
+        # ----------------- ဇာတ်ကား (၁) : The Flash ဗီဒီယိုများ -----------------
+        elif data == "m1_ep1":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၁ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUNrR-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_2":
+        elif data == "m1_ep2":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၂ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgullqYGxRVOwVCisP1T14wkwpTeDrAwACJR4AAoXLgVSvbOSV-SlXHD0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၂)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_3":
+        elif data == "m1_ep3":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၃ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEguqtqYH1JKVaAc4r3m1D_TSEGpRLRrQACJh4AAoXLgVTZ9Tnit771Sz0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၃)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_4":
+        elif data == "m1_ep4":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၄ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEguqxqYH1JCxkERguduVwRuf7HDAb2-gACKx4AAoXLgVRTok4Dly278z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_5":
+        elif data == "m1_ep5":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၅ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEguq1qYH1JMSEgt1ePqSHRuT58A0J94wAC1yMAAlnEeFT7fXUpjRcYMD0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_6":
+        elif data == "m1_ep6":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="အပိုင်း ၆ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
@@ -98,6 +135,56 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
+        # ----------------- ဇာတ်ကား (၂) : Lucifer ဗီဒီယိုများ -----------------
+        elif data == "m2_ep1":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgusVqYH9ML8Wz_1g885Oau3MBQAZ5dgACGxkAAlnEgFQsmJuyY9nHzD0E",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep2":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgusdqYH-Se21TwLwEDW3wExwMEhJP9gACBxoAAlnEgFSGD6a-ep3_wj0E",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၂)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep3":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgus1qYH_dvXVp2vP9ZAZ1WyIDxtFyHQACWhkAAlnEgFQxHsouPRWm1D0E",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၃)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep4":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgutNqYIAQ1YVOgrqS4AzuR1Pe54iYKgACZhkAAlnEgFRDkdzKuTv3xT0E",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep5":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgutVqYICU0yb2rG2-ux8vEEgAAeO5IrgAApYZAAJZxIBULyCSzraSoIM9BA",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep6":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgutdqYIDNUzAzxQdGBqkH5AM0-gQIkAACnhkAAlnEgFSZ92iCDLoVuj0E",
+                caption="🎬 Lucifer (2016) - အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        # ----------------- VIP အပိုင်းများ -----------------
         elif data == "vip_locked":
             keyboard = [
                 [InlineKeyboardButton("💬 မန်ဘာဝင်ရန် ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
@@ -107,6 +194,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await query.message.reply_text(
                 f"🔒 **VIP အပိုင်းများ (အပိုင်း ၇ နှင့်အထက်)**\n\n"
                 f"⚠️ ဤ အပိုင်းများကို ကြည့်ရှုရန်အတွက် VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n"
+                f"💰 မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်** ဖြစ်ပါသည်။\n\n"
                 f"မန်ဘာဝင်လိုပါက အောက်ပါခလုတ်ကို နှိပ်၍ Owner ထံသို့ ဆက်သွယ်နိုင်ပါသည် -",
                 reply_markup=reply_markup,
                 parse_mode="Markdown"
@@ -115,7 +203,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await query.message.reply_text(f"⚠️ Error: {str(e)}")
 
-# ၆ နာရီကြာရင် မက်ဆေ့ချ်ဖျက်ပေးမည့် ဖန်ရှင်
 def schedule_deletion(context, sent_msg):
     async def delete_msg():
         await asyncio.sleep(21600)  # 6 hours = 21600 seconds
@@ -132,4 +219,3 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button_handler))
     print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
-    
