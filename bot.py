@@ -1,4 +1,4 @@
-Import logging
+import logging
 import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, CallbackQueryHandler, CommandHandler
@@ -11,20 +11,20 @@ logging.basicConfig(
 
 CONTACT_USERNAME = "@naywww01"
 
-# /start နှိပ်လိုက်လျှင် ပုံနှင့်အတူ ဇာတ်ကားခလုတ် ပေါ်လာမည်
+# /start နှိပ်လိုက်လျှင် ပင်မပိုစတာပုံနှင့်အတူ ဇာတ်ကားရွေးချယ်စရာ ခလုတ်များ ပေါ်လာမည်
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("🎬 The Flash (2014)", callback_data="m1")]
+        [InlineKeyboardButton("🎬 The Flash (2014)", callback_data="m1")],
+        [InlineKeyboardButton("🎬 ဇာတ်ကားအသစ် နာမည် (ဥပမာ)", callback_data="m2")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # ⚠️ photo="..." နေရာတွင် ကိုယ့်ပုံ၏ File ID ကို ထည့်ပါ
+    # ⚠️ ပင်မ Bot ရဲ့ ပိုစတာပုံ File ID ကို ထည့်ပါ
     await update.message.reply_photo(
-        photo="ဒီနေရာတွင် ပုံ၏ File ID ကို ထည့်ပါ",
+        photo="AgACAgUAAxkBAAEguTZqY... (ပင်မပိုစတာပုံ File ID ထည့်ရန်)",
         caption=(
             "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\n\n"
-            "🎬 **The Flash (2014)** ဇာတ်ကားကို ကြည့်ရှုရန် "
-            "အောက်ပါ ခလုတ်ကို နှိပ်ပါ -"
+            "🎬 ကြည့်ရှုလိုသော ဇာတ်ကားကို အောက်ပါခလုတ်များမှ ရွေးချယ်ပါ -"
         ),
         reply_markup=reply_markup,
         parse_mode="Markdown"
@@ -36,7 +36,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     data = query.data
     try:
-        # The Flash နှိပ်ပါက အပိုင်း (၁) မှ (၆) အထိ Free၊ ၇ နှင့်အထက် VIP ပေါ်လာမည်
+        # ----------------- ဇာတ်ကား (၁) : The Flash -----------------
         if data == "m1":
             keyboard = [
                 [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="ep_1")],
@@ -49,21 +49,49 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
-            await query.message.reply_text(
-                "📌 **The Flash (2014)**\n\n"
-                "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
-                "• အပိုင်းအသစ်များနှင့် ကျန်အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n\n"
-                "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -",
+            await query.message.reply_photo(
+                photo="AgACAgUAAxkBAAEguTZqY... (The Flash ပိုစတာပုံ File ID ထည့်ရန်)",
+                caption=(
+                    "📌 **The Flash (2014)**\n\n"
+                    "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
+                    "• အပိုင်းအသစ်များနှင့် ကျန်အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n\n"
+                    "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -"
+                ),
                 reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
 
-        # အပိုင်း (၁) မှ (၆) အထိ ဗီဒီယို File ID များကို ဤနေရာတွင် ထည့်ပါ 👇
+        # ----------------- ဇာတ်ကား (၂) : ဇာတ်ကားအသစ် -----------------
+        elif data == "m2":
+            keyboard = [
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m2_ep_1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m2_ep_2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m2_ep_3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m2_ep_4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m2_ep_5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m2_ep_6")],
+                [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.message.reply_photo(
+                photo="AgACAgUAAxkBAAEguTZqY... (ဇာတ်ကား ၂ ပိုစတာပုံ File ID ထည့်ရန်)",
+                caption=(
+                    "📌 **ဇာတ်ကားအသစ် နာမည်**\n\n"
+                    "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
+                    "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -"
+                ),
+                reply_markup=reply_markup,
+                parse_mode="Markdown"
+            )
+
+        # ----------------- ဇာတ်ကား (၁) ရဲ့ ဗီဒီယို File ID များ -----------------
         elif data == "ep_1":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၁ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
@@ -71,7 +99,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif data == "ep_2":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၂ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၂)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
@@ -79,7 +107,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif data == "ep_3":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၃ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၃)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
@@ -87,7 +115,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif data == "ep_4":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၄ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
@@ -95,7 +123,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif data == "ep_5":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၅ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
@@ -103,8 +131,57 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif data == "ep_6":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
-                video="အပိုင်း ၆ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
                 caption="🎬 The Flash (2014) - အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        # ----------------- ဇာတ်ကား (၂) ရဲ့ ဗီဒီယို File ID များ -----------------
+        elif data == "m2_ep_1":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep_2":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၂)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep_3":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၃)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep_4":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep_5":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "m2_ep_6":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUAnr-eL_z0E",
+                caption="🎬 ဇာတ်ကားအသစ် - အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
             )
             schedule_deletion(context, sent_msg)
 
@@ -143,4 +220,4 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button_handler))
     print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
-
+            
