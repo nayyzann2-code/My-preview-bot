@@ -10,7 +10,6 @@ logging.basicConfig(
 
 CONTACT_USERNAME = "@naywww01"
 
-# ဇာတ်ကားအချက်အလက်များ
 MOVIES_DATABASE = {
     "m1": {
         "title": "🎬 The Flash (2014)",
@@ -107,7 +106,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif data.startswith("vid_"):
         parts = data.split("_")
-        movie_key = parts[1]  # ဥပမာ: m1, m2
+        movie_key = parts[1]
         ep_index = int(parts[2])
         
         if movie_key in MOVIES_DATABASE:
@@ -124,8 +123,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
+    
     application = ApplicationBuilder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
-    application.run_polling()
-        
+    
+    print("Bot is starting cleanly...")
+    # တစ်ပြိုင်နက်တည်း အလုပ်လုပ်နေတာတွေကို ဖြတ်ထုတ်ပြီးမှ စတင်ရန်
+    application.run_polling(drop_pending_updates=True)
+    
