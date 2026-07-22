@@ -17,12 +17,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
+    # တောင်းဆိုထားသည့် အလှပဆုံး စစာသားပုံစံ
+    caption_text = (
+        "Hello 👋:\n"
+        "ဇာတ်ကားရွေးပါ\n"
+        "တ စ် ချ က် နှိပ် ဇာတ်ကား \n"
+        "တန်းကျနဲ့ လင့်တွေ ပေါ်လာပါမယ်ပျ။\n"
+        "--------------------------------\n\n"
+        "10 မိနစ်နေရင် ပြန်ပျက်ပါတယ် \n"
+        "[/start] နှိပ်ပြီး ပြန်ယူပါလို့ ရပါတယ်။"
+    )
+
     sent_msg = await update.message.reply_photo(
         photo="AgACAgUAAxkBAAEgueJqYFrWN-knIvOwmsOQ859SgDB3eQACUxVrG9u7CFdtu8B_Lb_nPQEAAwIAA3gAAz0E",
-        caption=(
-            "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\n"
-            "အောက်ပါ ဇာတ်ကားများကို နှိပ်၍ အပိုင်းများကို ရွေးချယ်နိုင်ပါသည် -"
-        ),
+        caption=caption_text,
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
@@ -43,10 +51,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=(
                     "📌 **The Flash (2014) season 1 to 9**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                protect_content=True
             )
 
             video_list_m1 = [
@@ -62,7 +71,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 sent_msg = await context.bot.send_video(
                     chat_id=query.message.chat_id,
                     video=vid,
-                    caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+                    caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၁၂ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။",
+                    protect_content=True  # Save / Forward ပိတ်ရန်
                 )
                 schedule_deletion(context, sent_msg)
 
@@ -74,7 +84,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 chat_id=query.message.chat_id,
                 text="🔒 **အပိုင်း (၇) နှင့် အထက် ကျန်ရှိသော အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။**",
                 reply_markup=reply_markup,
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                protect_content=True
             )
 
         # ----------------- ဇာတ်ကား (၂) : Lucifer -----------------
@@ -84,10 +95,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=(
                     "📌 **Lucifer (2016) season 1 to 6**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                protect_content=True
             )
 
             video_list_m2 = [
@@ -103,7 +115,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 sent_msg = await context.bot.send_video(
                     chat_id=query.message.chat_id,
                     video=vid,
-                    caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+                    caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၁၂ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။",
+                    protect_content=True  # Save / Forward ပိတ်ရန်
                 )
                 schedule_deletion(context, sent_msg)
 
@@ -115,7 +128,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 chat_id=query.message.chat_id,
                 text="🔒 **အပိုင်း (၇) နှင့် အထက် ကျန်ရှိသော အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။**",
                 reply_markup=reply_markup,
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                protect_content=True
             )
 
         # ----------------- VIP အပိုင်းများ -----------------
@@ -131,7 +145,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"💰 မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်** ဖြစ်ပါသည်။\n\n"
                 f"မန်ဘာဝင်လိုပါက အောက်ပါခလုတ်ကို နှိပ်၍ Owner ထံသို့ ဆက်သွယ်နိုင်ပါသည် -",
                 reply_markup=reply_markup,
-                parse_mode="Markdown"
+                parse_mode="Markdown",
+                protect_content=True
             )
             
     except Exception as e:
@@ -139,7 +154,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def schedule_deletion(context, sent_msg):
     async def delete_msg():
-        await asyncio.sleep(21600)  # 6 hours = 21600 seconds
+        await asyncio.sleep(43200)  # 12 hours = 43200 seconds
         try:
             await context.bot.delete_message(chat_id=sent_msg.chat_id, message_id=sent_msg.message_id)
         except Exception:
