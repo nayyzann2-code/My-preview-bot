@@ -17,7 +17,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await update.message.reply_photo(
+    sent_msg = await update.message.reply_photo(
         photo="AgACAgUAAxkBAAEgueJqYFrWN-knIvOwmsOQ859SgDB3eQACUxVrG9u7CFdtu8B_Lb_nPQEAAwIAA3gAAz0E",
         caption=(
             "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\n"
@@ -26,6 +26,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
+    
+    # ဇာတ်ကားမရွေးဘဲ ၁၀ မိနစ် (စက္ကန့် ၆၀၀) ကြာရင် ပျက်ရန်
+    schedule_start_deletion(context, sent_msg)
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -33,23 +36,16 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     data = query.data
     try:
-        # ----------------- ဇာတ်ကား (၁) : The Flash (အခမဲ့ ၆ ပိုင်း တခါတည်းပို့ရန်) -----------------
+        # ----------------- ဇာတ်ကား (၁) : The Flash -----------------
         if data == "m1":
-            keyboard = [
-                [InlineKeyboardButton("💬 VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) - ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            
             await query.message.reply_photo(
                 photo="AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3cAAz0E",
                 caption=(
                     "📌 **The Flash (2014) season 1 to 9**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• အောက်ပါ ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
-                    "• မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်** (အပိုင်း ၇ နှင့်အထက်အတွက်)\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
-                reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
 
@@ -59,7 +55,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 ("BAACAgUAAxkBAAEguqtqYH1JKVaAc4r3m1D_TSEGpRLRrQACJh4AAoXLgVTZ9Tnit771Sz0E", "🎬 The Flash (2014) - အပိုင်း (၃)"),
                 ("BAACAgUAAxkBAAEguqxqYH1JCxkERguduVwRuf7HDAb2-gACKx4AAoXLgVRTok4Dly278z0E", "🎬 The Flash (2014) - အပိုင်း (၄)"),
                 ("BAACAgUAAxkBAAEguq1qYH1JMSEgt1ePqSHRuT58A0J94wAC1yMAAlnEeFT7fXUpjRcYMD0E", "🎬 The Flash (2014) - အပိုင်း (၅)"),
-                ("BAACAgUAAxkBAAEgutdqYIDNUzAzxQdGBqkH5AM0-gQIkAACnhkAAlnEgFSZ92iCDLoVuj0E", "🎬 The Flash (2014) - အပိုင်း (၆)") # လိုအပ်ပါက အပိုင်း ၆ ရဲ့ File ID အမှန်ကို ပြောင်းထည့်ပါ
+                ("BAACAgUAAxkBAAEgutdqYIDNUzAzxQdGBqkH5AM0-gQIkAACnhkAAlnEgFSZ92iCDLoVuj0E", "🎬 The Flash (2014) - အပိုင်း (၆)")
             ]
 
             for vid, cap in video_list_m1:
@@ -70,23 +66,27 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 )
                 schedule_deletion(context, sent_msg)
 
-        # ----------------- ဇာတ်ကား (၂) : Lucifer (အခမဲ့ ၆ ပိုင်း တခါတည်းပို့ရန်) -----------------
-        elif data == "m2":
             keyboard = [
-                [InlineKeyboardButton("💬 VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) - ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+                [InlineKeyboardButton("💬 ကျန်အပိုင်းများဆက်လက်ကြည့်ဖို့ VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            
+            await context.bot.send_message(
+                chat_id=query.message.chat_id,
+                text="🔒 **အပိုင်း (၇) နှင့် အထက် ကျန်ရှိသော အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။**",
+                reply_markup=reply_markup,
+                parse_mode="Markdown"
+            )
+
+        # ----------------- ဇာတ်ကား (၂) : Lucifer -----------------
+        elif data == "m2":
             await query.message.reply_photo(
                 photo="AgACAgUAAxkBAAEguktqYGtKcwc5Lz0a-uvM011zR6ouQQACrBJrG-62aFXF-kV2rfK7_gEAAwIAA3cAAz0E",
                 caption=(
                     "📌 **Lucifer (2016) season 1 to 6**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• အောက်ပါ ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
-                    "• မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်** (အပိုင်း ၇ နှင့်အထက်အတွက်)\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
-                reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
 
@@ -107,7 +107,18 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 )
                 schedule_deletion(context, sent_msg)
 
-        # ----------------- VIP အပိုင်းများ (အပိုင်း ၇ နှင့် အထက်) -----------------
+            keyboard = [
+                [InlineKeyboardButton("💬 ကျန်အပိုင်းများဆက်လက်ကြည့်ဖို့ VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            await context.bot.send_message(
+                chat_id=query.message.chat_id,
+                text="🔒 **အပိုင်း (၇) နှင့် အထက် ကျန်ရှိသော အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။**",
+                reply_markup=reply_markup,
+                parse_mode="Markdown"
+            )
+
+        # ----------------- VIP အပိုင်းများ -----------------
         elif data == "vip_locked":
             keyboard = [
                 [InlineKeyboardButton("💬 မန်ဘာဝင်ရန် ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
@@ -134,6 +145,15 @@ def schedule_deletion(context, sent_msg):
         except Exception:
             pass
     context.application.create_task(delete_msg())
+
+def schedule_start_deletion(context, sent_msg):
+    async def delete_start_msg():
+        await asyncio.sleep(600)  # 10 minutes = 600 seconds
+        try:
+            await context.bot.delete_message(chat_id=sent_msg.chat_id, message_id=sent_msg.message_id)
+        except Exception:
+            pass
+    context.application.create_task(delete_start_msg())
 
 if __name__ == '__main__':
     TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
