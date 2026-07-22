@@ -132,4 +132,4 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button_handler))
     print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
-ပ
+    
