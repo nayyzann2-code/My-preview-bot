@@ -10,8 +10,9 @@ logging.basicConfig(
 
 CONTACT_USERNAME = "@naywww01"
 
+# ဇာတ်ကားအချက်အလက်များ
 MOVIES_DATABASE = {
-    "movie_1": {
+    "m1": {
         "title": "🎬 The Flash (2014)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E", 
         "file_ids": [
@@ -23,47 +24,47 @@ MOVIES_DATABASE = {
             "AAMCBQADGQEDXl9-al9m_Your_File_ID_Ep6_Here"
         ]
     },
-    "movie_2": {
+    "m2": {
         "title": "🎬 ဇာတ်ကား (၂) - သည်းထိတ်ရင်ဖို (Thriller)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_3": {
+    "m3": {
         "title": "🎬 ဇာတ်ကား (၃) - ဟာស (Comedy)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_4": {
+    "m4": {
         "title": "🎬 ဇာတ်ကား (၄) - အချစ်ဇာတ်လမ်း (Romance)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_5": {
+    "m5": {
         "title": "🎬 ဇာတ်ကား (၅) - သိပ္ပံဇာတ်ကား (Sci-Fi)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_6": {
+    "m6": {
         "title": "🎬 ဇာတ်ကား (၆) - သရဲ/ကြောက်မက်ဖွယ် (Horror)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_7": {
+    "m7": {
         "title": "🎬 ဇာတ်ကား (၇) - ကာတွန်း/အန်နီမေးရှင်း (Animation)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_8": {
+    "m8": {
         "title": "🎬 ဇာတ်ကား (၈) - စွန့်စားခန်း (Adventure)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_9": {
+    "m9": {
         "title": "🎬 ဇာတ်ကား (၉) - ဒရာမာ (Drama)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     },
-    "movie_10": {
+    "m10": {
         "title": "🎬 ဇာတ်ကား (၁၀) - စစ်ရေး/သမိုင်း (War/History)",
         "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
         "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
@@ -106,8 +107,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif data.startswith("vid_"):
         parts = data.split("_")
-        movie_key = f"{parts[1]}_{parts[2]}"
-        ep_index = int(parts[3])
+        movie_key = parts[1]  # ဥပမာ: m1, m2
+        ep_index = int(parts[2])
         
         if movie_key in MOVIES_DATABASE:
             file_id = MOVIES_DATABASE[movie_key]["file_ids"][ep_index]
@@ -127,4 +128,4 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
     application.run_polling()
-    
+        
