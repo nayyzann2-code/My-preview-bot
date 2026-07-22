@@ -22,7 +22,7 @@ MOVIES_DATABASE = {
             "AAMCBQADGQEDXl5-al9mFiIMkV1nc2RucvmJodK_ULoAAiYeAAKFy4FUNRtZ8dDMvisBAAdtAAM9BA",
             "AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA", 
             "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA",
-            "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA" # <--- အပိုင်း (၆) ဖိုင် ID ထည့်ရန် နေရာ
+            "AAMCBQADGQEDXl9-al9m_Your_File_ID_Ep6_Here" # <--- ဒီနေရာမှာ အပိုင်း ၆ ရဲ့ File ID ကို ဖြည့်ပါ
         ]
     },
     "movie_2": {
@@ -121,14 +121,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data in MOVIES_DATABASE:
         movie = MOVIES_DATABASE[data]
         
-        # အပိုင်း ၁ မှ ၆ အထိ ခလုတ်များ အလိုအလျောက် ဖန်တီးမည်
         keyboard = []
         for index, file_id in enumerate(movie["file_ids"], start=1):
             keyboard.append([InlineKeyboardButton(f"အပိုင်း {index}", callback_data=f"vid_{data}_{index-1}")])
         
         reply_markup = InlineKeyboardMarkup(keyboard)
         
-        # ဇာတ်ကားပုံ (Photo File ID) နှင့်အတူ အပိုင်းခလုတ်များကို ပို့မည်
         menu_msg = await context.bot.send_photo(
             chat_id=query.message.chat_id,
             photo=movie["photo"],
@@ -137,7 +135,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode="Markdown"
         )
         
-        # 6 နာရီကြာပါက ပုံနှင့် မီနူးစာတို ပျောက်သွားရန်
         context.job_queue.run_once(delete_message_job, 21600, data=menu_msg)
 
     elif data.startswith("vid_"):
@@ -175,3 +172,4 @@ if __name__ == '__main__':
     
     print("Bot is running with photo file_id support...")
     application.run_polling()
+    
