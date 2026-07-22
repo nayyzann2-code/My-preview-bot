@@ -93,7 +93,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=(
                     "📌 **Lucifer (2016) season 1 to 6**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်።\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
                 parse_mode="Markdown",
@@ -170,7 +170,6 @@ def schedule_start_deletion(context, sent_msg):
 
 if __name__ == '__main__':
     TOKEN = "8954957485:AAGGgFuycqN1fgGup46l1zxizsViqjFMhxk"
-
     application = ApplicationBuilder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
