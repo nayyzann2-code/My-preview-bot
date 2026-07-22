@@ -17,7 +17,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # တောင်းဆိုထားသည့် အလှပဆုံး စစာသားပုံစံ
     caption_text = (
         "Hello 👋:\n"
         "ဇာတ်ကားရွေးပါ\n"
@@ -35,7 +34,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         parse_mode="Markdown"
     )
     
-    # ဇာတ်ကားမရွေးဘဲ ၁၀ မိနစ် (စက္ကန့် ၆၀၀) ကြာရင် ပျက်ရန်
     schedule_start_deletion(context, sent_msg)
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -72,12 +70,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chat_id=query.message.chat_id,
                     video=vid,
                     caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၁၂ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။",
-                    protect_content=True  # Save / Forward ပိတ်ရန်
+                    protect_content=True
                 )
                 schedule_deletion(context, sent_msg)
 
             keyboard = [
-                [InlineKeyboardButton("💬 ကျန်အပိုင်းများဆက်လက်ကြည့်ဖို့ VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+                [InlineKeyboardButton("VIP မန်ဘာဝင်ရန် (2000)ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await context.bot.send_message(
@@ -95,7 +93,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=(
                     "📌 **Lucifer (2016) season 1 to 6**\n"
                     "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
-                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n\n"
+                    "• ပို့ပေးသော ဗီဒီယိုများသည် **(၁၂) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်።\n\n"
                     "👇 အောက်ပါ အပိုင်း (၆) ပိုင်းကို ပို့ပေးလိုက်ပါပြီ -"
                 ),
                 parse_mode="Markdown",
@@ -116,12 +114,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chat_id=query.message.chat_id,
                     video=vid,
                     caption=f"{cap}\n\n⚠️ ဤဗီဒီယိုသည် ၁၂ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။",
-                    protect_content=True  # Save / Forward ပိတ်ရန်
+                    protect_content=True
                 )
                 schedule_deletion(context, sent_msg)
 
             keyboard = [
-                [InlineKeyboardButton("💬 ကျန်အပိုင်းများဆက်လက်ကြည့်ဖို့ VIP မန်ဘာဝင်ရန် (၂,၀၀၀ ကျပ်) ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+                [InlineKeyboardButton("VIP မန်ဘာဝင်ရန် (2000)ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await context.bot.send_message(
@@ -135,7 +133,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # ----------------- VIP အပိုင်းများ -----------------
         elif data == "vip_locked":
             keyboard = [
-                [InlineKeyboardButton("💬 မန်ဘာဝင်ရန် ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+                [InlineKeyboardButton("VIP မန်ဘာဝင်ရန် (2000)ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
@@ -143,7 +141,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"🔒 **VIP အပိုင်းများ (အပိုင်း ၇ နှင့်အထက်)**\n\n"
                 f"⚠️ ဤ အပိုင်းများကို ကြည့်ရှုရန်အတွက် VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n"
                 f"💰 မန်ဘာကြေး - **တစ်ကားလျှင် ၂,၀၀၀ ကျပ်** ဖြစ်ပါသည်။\n\n"
-                f"မန်ဘာဝင်လိုပါက အောက်ပါခလုတ်ကို နှိပ်၍ Owner ထံသို့ ဆက်သွယ်နိုင်ပါသည် -",
+                f"မန်ဘာဝင်လိုပါက အောက်ပါခလုတ်ကို နှိပ်၍ ဆက်သွယ်နိုင်ပါသည် -",
                 reply_markup=reply_markup,
                 parse_mode="Markdown",
                 protect_content=True
