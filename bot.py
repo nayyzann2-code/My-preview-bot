@@ -1,6 +1,6 @@
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, ContextTypes, CallbackQueryHandler, CommandHandler, filters
+from telegram.ext import ApplicationBuilder, ContextTypes, CallbackQueryHandler, CommandHandler
 
 # Logging setup
 logging.basicConfig(
@@ -14,7 +14,7 @@ CONTACT_USERNAME = "@naywww01"
 # ဇာတ်ကားအမျိုးအစား ၁၀ မျိုးနှင့် ဇာတ်ကားနာမည်များ၊ အပိုင်း (၁ မှ ၆) လင့်ခ်များ
 MOVIES_DATABASE = {
     "movie_1": {
-        "title": "🎬 the flash ဇာတ်ကား (၁) - အက်ရှင် (Action)",
+        "title": "🎬 ဇာတ်ကား (၁) - အက်ရှင် (Action)",
         "episodes": [
             "လင့်ခ် ၁: https://t.example.com/m1_ep1 (အပိုင်း ၁)",
             "လင့်ခ် ၂: https://t.example.com/m1_ep2 (အပိုင်း ၂)",
@@ -132,11 +132,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await update.message.reply_text(
-        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားစာရင်းထဲမှ ကြည့်ရှုလိုသည်များကို ရွေးချယ်နိုင်ပါသည် (အခမဲ့ ၁ မှ ၆ ပပိုင်းအထိ အချိန်မရွေး ကြည့်ရှုနိုင်သည်)။\n\n*(⚠️ ပို့ပေးလိုက်သော လင့်ခ်များသည် ၈ နာရီပြည့်ပါက အလိုအလျောက် သက်တမ်းကုန်ဆုံးမည်ဖြစ်ပါသည်။)*",
+    msg = await update.message.reply_text(
+        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားစာရင်းထဲမှ ကြည့်ရှုလိုသည်များကို ရွေးချယ်နိုင်ပါသည် (အခမဲ့ ၁ မှ ၆ ပိုင်းအထိ ကြည့်ရှုနိုင်သည်)။\n\n*(⚠️ ဤမီနူးလင့်ခ်သည် ၁ မိနစ်အတွင်း မရွေးချယ်ပါက အလိုအလျောက် ပျက်သွားမည် ဖြစ်ပါသည်။)*",
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
+
+    # ၁ မိနစ် (၆၀ စက္ကန့်) ပြည့်ပါက မီနူးစာတိုကို အလိုအလျောက် ဖျက်ရန်
+    context.job_queue.run_once(delete_message_job, 60, data=msg)
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -150,15 +153,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for ep in movie["episodes"]:
             response_text += f"{ep}\n"
         
-        response_text += f"\n⚠️ **မှတ်ချက်:** အခမဲ့ ၆ ပပိုင်း ပြည့်သွားပါပြီ။ ၆ ပပိုင်းထက် ပိုမိုကြည့်ရှုလိုပါက Member (VIP) ဝင်ရန် လိုအပ်ပါသည်။\n💬 **ဆက်သွယ်ရန် Username:** {CONTACT_USERNAME}\n\n*(ℹ️ ဤလင့်ခ်များသည် အချိန်မရွေး နှိပ်၍ကြည့်နိုင်ပြီး ၈ နာရီကြာမှသာ လင့်ခ်သက်တမ်းကုန်ပါမည်)*"
+        response_text += f"\n⚠️ **မှတ်ချက်:** အခမဲ့ ၆ ပိုင်း ပြည့်သွားပါပြီ။ ၆ ပိုင်းထက် ပိုမိုကြည့်ရှုလိုပါက Member (VIP) ဝင်ရန် လိုအပ်ပါသည်။\n💬 **ဆက်သွယ်ရန် Username:** {CONTACT_USERNAME}\n\n*(ℹ️ ဤလင့်ခ်များသည် ၆ နာရီကြာမှသာ သက်တမ်းကုန်ဆုံးမည်ဖြစ်ပါသည်။)*"
         
         # ဇာတ်ကားလင့်ခ်များ ပို့မည်
         sent_msg = await query.message.reply_text(response_text, parse_mode="Markdown")
         
-        # ၈ နာရီ (၂၈၈၀၀ စက္ကန့်) ပြည့်ပါက လင့်ခ်စာတိုကို အလိုအလျောက် ဖျက်ရန်
-        context.job_queue.run_once(delete_message_after_8_hours, 28800, data=sent_msg)
+        # ၆ နာရီ (၂၁၆၀၀ စက္ကန့်) ပြည့်ပါက လင့်ခ်စာတိုကို အလိုအလျောက် ဖျက်ရန်
+        context.job_queue.run_once(delete_message_job, 21600, data=sent_msg)
 
-async def delete_message_after_8_hours(context: ContextTypes.DEFAULT_TYPE):
+async def delete_message_job(context: ContextTypes.DEFAULT_TYPE):
     job = context.job
     try:
         await context.bot.delete_message(chat_id=job.data.chat_id, message_id=job.data.message_id)
@@ -173,5 +176,6 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
     
-    print("Bot is running with inline buttons and 8-hour timer...")
+    print("Bot is running with 1-min menu timer and 6-hour link timer...")
     application.run_polling()
+    
