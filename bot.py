@@ -15,10 +15,14 @@ CONTACT_USERNAME = "@naywww01"
 MOVIES_DATABASE = {
     "movie_1": {
         "title": "🎬 The Flash (2014)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E", # ဇာတ်ကား၏ Telegram ပုံ File ID ထည့်ရန်
+        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E", 
         "file_ids": [
-            "AAMCBQADGQEDXlV_al9eVk62LzCTrKjv_7BEv0WtD84AAiQeAAKFy4FUXJNsFXuqRPEBAAdtAAM9BA", "AAMCBQADGQEDXl5Qal9l8QAB-eBpKsJe-DECTOQgKQ77AAIlHgAChcuBVK49jZTQRMVjAQAHbQADPQQ", "AAMCBQADGQEDXl5-al9mFiIMkV1nc2RucvmJodK_ULoAAiYeAAKFy4FUNRtZ8dDMvisBAAdtAAM9BA",
-            "AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA", "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA", 
+            "AAMCBQADGQEDXlV_al9eVk62LzCTrKjv_7BEv0WtD84AAiQeAAKFy4FUXJNsFXuqRPEBAAdtAAM9BA", 
+            "AAMCBQADGQEDXl5Qal9l8QAB-eBpKsJe-DECTOQgKQ77AAIlHgAChcuBVK49jZTQRMVjAQAHbQADPQQ", 
+            "AAMCBQADGQEDXl5-al9mFiIMkV1nc2RucvmJodK_ULoAAiYeAAKFy4FUNRtZ8dDMvisBAAdtAAM9BA",
+            "AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA", 
+            "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA",
+            "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA" # <--- အပိုင်း (၆) ဖိုင် ID ထည့်ရန် နေရာ
         ]
     },
     "movie_2": {
@@ -117,7 +121,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data in MOVIES_DATABASE:
         movie = MOVIES_DATABASE[data]
         
-        # အပိုင်း ၁ မှ ၆ အထိ English နံပါတ်ခလုတ်များ ဖန်တီးမည်
+        # အပိုင်း ၁ မှ ၆ အထိ ခလုတ်များ အလိုအလျောက် ဖန်တီးမည်
         keyboard = []
         for index, file_id in enumerate(movie["file_ids"], start=1):
             keyboard.append([InlineKeyboardButton(f"အပိုင်း {index}", callback_data=f"vid_{data}_{index-1}")])
@@ -162,7 +166,7 @@ async def delete_message_job(context: ContextTypes.DEFAULT_TYPE):
         print(f"Error deleting message: {e}")
 
 if __name__ == '__main__':
-    TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"  # <--- ကိုယ့် Bot Token ထည့်ရန်
+    TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
     
     application = ApplicationBuilder().token(TOKEN).build()
     
