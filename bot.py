@@ -10,6 +10,7 @@ logging.basicConfig(
 
 CONTACT_USERNAME = "@naywww01"
 
+# ဇာတ်ကား ၁ ကားစာအတွက် သီးသန့်စမ်းသပ်ရန်
 MOVIES_DATABASE = {
     "m1": {
         "title": "🎬 The Flash (2014)",
@@ -22,51 +23,6 @@ MOVIES_DATABASE = {
             "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA",
             "AAMCBQADGQEDXl9-al9m_Your_File_ID_Ep6_Here"
         ]
-    },
-    "m2": {
-        "title": "🎬 ဇာတ်ကား (၂) - သည်းထိတ်ရင်ဖို (Thriller)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m3": {
-        "title": "🎬 ဇာတ်ကား (၃) - ဟာស (Comedy)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m4": {
-        "title": "🎬 ဇာတ်ကား (၄) - အချစ်ဇာတ်လမ်း (Romance)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m5": {
-        "title": "🎬 ဇာတ်ကား (၅) - သိပ္ပံဇာတ်ကား (Sci-Fi)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m6": {
-        "title": "🎬 ဇာတ်ကား (၆) - သရဲ/ကြောက်မက်ဖွယ် (Horror)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m7": {
-        "title": "🎬 ဇာတ်ကား (၇) - ကာတွန်း/အန်နီမေးရှင်း (Animation)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m8": {
-        "title": "🎬 ဇာတ်ကား (၈) - စွန့်စားခန်း (Adventure)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m9": {
-        "title": "🎬 ဇာတ်ကား (၉) - ဒရာမာ (Drama)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
-    },
-    "m10": {
-        "title": "🎬 ဇာတ်ကား (၁၀) - စစ်ရေး/သမိုင်း (War/History)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
-        "file_ids": ["EP1", "EP2", "EP3", "EP4", "EP5", "EP6"]
     }
 }
 
@@ -77,7 +33,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားစာရင်းထဲမှ ကြည့်ရှုလိုသည်များကို ရွေးချယ်နိုင်ပါသည် -",
+        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားကို နှိပ်၍ ကြည့်ရှုနိုင်ပါသည် -",
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
@@ -123,12 +79,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
-    
     application = ApplicationBuilder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
-    
     print("Bot is starting cleanly...")
-    # တစ်ပြိုင်နက်တည်း အလုပ်လုပ်နေတာတွေကို ဖြတ်ထုတ်ပြီးမှ စတင်ရန်
     application.run_polling(drop_pending_updates=True)
     
