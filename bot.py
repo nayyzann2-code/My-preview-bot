@@ -17,7 +17,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # ⚠️ ဤနေရာတွင် Bot စတင်ချိန်ပြမည့် ပင်မပိုစတာပုံ၏ File ID ကို ထည့်ပါ
     await update.message.reply_photo(
         photo="AgACAgUAAxkBAAEgueJqYFrWN-knIvOwmsOQ859SgDB3eQACUxVrG9u7CFdtu8B_Lb_nPQEAAwIAA3gAAz0E",
         caption=(
@@ -37,12 +36,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # ----------------- ဇာတ်ကား (၁) : The Flash -----------------
         if data == "m1":
             keyboard = [
-                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="ep_1")],
-                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="ep_2")],
-                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="ep_3")],
-                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="ep_4")],
-                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="ep_5")],
-                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="ep_6")],
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m1_ep1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m1_ep2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m1_ep3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m1_ep4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m1_ep5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m1_ep6")],
                 [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -63,17 +62,16 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # ----------------- ဇာတ်ကား (၂) : အသစ် -----------------
         elif data == "m2":
             keyboard = [
-                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m2_ep_1")],
-                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m2_ep_2")],
-                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m2_ep_3")],
-                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m2_ep_4")],
-                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m2_ep_5")],
-                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m2_ep_6")],
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="m2_ep1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="m2_ep2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="m2_ep3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="m2_ep4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="m2_ep5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="m2_ep6")],
                 [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
-            # ⚠️ ဤနေရာတွင် ဇာတ်ကား (၂) ပိုစတာပုံ၏ File ID ကို ထည့်ပါ
             await query.message.reply_photo(
                 photo="AgACAgUAAxkBAAEguktqYGtKcwc5Lz0a-uvM011zR6ouQQACrBJrG-62aFXF-kV2rfK7_gEAAwIAA3cAAz0E",
                 caption=(
@@ -86,8 +84,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode="Markdown"
             )
 
-        # ----------------- ဇာတ်ကား (၁) ရဲ့ ဗီဒီယိုများ -----------------
-        elif data == "ep_1":
+        # ----------------- ဇာတ်ကား (၁) : The Flash ဗီဒီယိုများ -----------------
+        elif data == "m1_ep1":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="BAACAgUAAxkBAAEgubBqYFc8zCBAF0q4TGoZwX3xHLSX1AACJB4AAoXLgVRxAUNrR-eL_z0E",
@@ -95,7 +93,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_2":
+        elif data == "m1_ep2":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="BAACAgUAAxkBAAEgullqYGxRVOwVCisP1T14wkwpTeDrAwACJR4AAoXLgVSvbOSV-SlXHD0E",
@@ -103,7 +101,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_3":
+        elif data == "m1_ep3":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="အပိုင်း ၃ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
@@ -111,7 +109,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_4":
+        elif data == "m1_ep4":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="အပိုင်း ၄ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
@@ -119,7 +117,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_5":
+        elif data == "m1_ep5":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="အပိုင်း ၅ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
@@ -127,7 +125,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "ep_6":
+        elif data == "m1_ep6":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="အပိုင်း ၆ ရဲ့ File ID ကို ဤနေရာတွင် ထည့်ပါ",
@@ -135,8 +133,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        # ----------------- ဇာတ်ကား (၂) ရဲ့ ဗီဒီယိုများ -----------------
-        elif data == "m2_ep_1":
+        # ----------------- ဇာတ်ကား (၂) ဗီဒီယိုများ -----------------
+        elif data == "m2_ep1":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၁ ရဲ့ File ID ထည့်ရန်",
@@ -144,7 +142,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "m2_ep_2":
+        elif data == "m2_ep2":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၂ ရဲ့ File ID ထည့်ရန်",
@@ -152,7 +150,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "m2_ep_3":
+        elif data == "m2_ep3":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၃ ရဲ့ File ID ထည့်ရန်",
@@ -160,7 +158,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "m2_ep_4":
+        elif data == "m2_ep4":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၄ ရဲ့ File ID ထည့်ရန်",
@@ -168,7 +166,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "m2_ep_5":
+        elif data == "m2_ep5":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၅ ရဲ့ File ID ထည့်ရန်",
@@ -176,7 +174,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             schedule_deletion(context, sent_msg)
 
-        elif data == "m2_ep_6":
+        elif data == "m2_ep6":
             sent_msg = await context.bot.send_video(
                 chat_id=query.message.chat_id,
                 video="ဇာတ်ကား ၂ အပိုင်း ၆ ရဲ့ File ID ထည့်ရန်",
@@ -202,7 +200,6 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await query.message.reply_text(f"⚠️ Error: {str(e)}")
 
-# ၆ နာရီကြာရင် မက်ဆေ့ချ်ဖျက်ပေးမည့် ဖန်ရှင်
 def schedule_deletion(context, sent_msg):
     async def delete_msg():
         await asyncio.sleep(21600)  # 6 hours = 21600 seconds
@@ -219,4 +216,4 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button_handler))
     print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
-    
+        
