@@ -1,4 +1,5 @@
 import logging
+import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, CallbackQueryHandler, CommandHandler
 
@@ -10,30 +11,21 @@ logging.basicConfig(
 
 CONTACT_USERNAME = "@naywww01"
 
-# ဇာတ်ကား ၁ ကားစာအတွက် သီးသန့်စမ်းသပ်ရန်
-MOVIES_DATABASE = {
-    "m1": {
-        "title": "🎬 The Flash (2014)",
-        "photo": "AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E", 
-        "file_ids": [
-            "AAMCBQADGQEDXlV_al9eVk62LzCTrKjv_7BEv0WtD84AAiQeAAKFy4FUXJNsFXuqRPEBAAdtAAM9BA", 
-            "AAMCBQADGQEDXl5Qal9l8QAB-eBpKsJe-DECTOQgKQ77AAIlHgAChcuBVK49jZTQRMVjAQAHbQADPQQ", 
-            "AAMCBQADGQEDXl5-al9mFiIMkV1nc2RucvmJodK_ULoAAiYeAAKFy4FUNRtZ8dDMvisBAAdtAAM9BA",
-            "AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA", 
-            "AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA",
-            "AAMCBQADGQEDXl9-al9m_Your_File_ID_Ep6_Here"
-        ]
-    }
-}
-
+# /start နှိပ်လိုက်လျှင် ပုံနှင့်အတူ ဇာတ်ကားခလုတ် ပေါ်လာမည်
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = []
-    for key, value in MOVIES_DATABASE.items():
-        keyboard.append([InlineKeyboardButton(value["title"], callback_data=key)])
-    
+    keyboard = [
+        [InlineKeyboardButton("🎬 The Flash (2014)", callback_data="m1")]
+    ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text(
-        "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\nအောက်ပါ ဇာတ်ကားကို နှိပ်၍ ကြည့်ရှုနိုင်ပါသည် -",
+    
+    # ⚠️ photo="..." နေရာတွင် ကိုယ့်ပုံ၏ File ID ကို ထည့်ပါ
+    await update.message.reply_photo(
+        photo="AgACAgUAAxkBAAEguTZqYDpsIxym5LL1imj09cHLuhpPCQACoxJrG-62aFUXfew0CMQ-UQEAAwIAA3kAAz0E",
+        caption=(
+            "✨ **ကြိုဆိုပါတယ်ခင်ဗျာ!**\n\n"
+            "🎬 **The Flash (2014)** ဇာတ်ကားကို ကြည့်ရှုရန် "
+            "အောက်ပါ ခလုတ်ကို နှိပ်ပါ -"
+        ),
         reply_markup=reply_markup,
         parse_mode="Markdown"
     )
@@ -43,45 +35,112 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
     
     data = query.data
-    if data in MOVIES_DATABASE:
-        movie = MOVIES_DATABASE[data]
-        
-        keyboard = []
-        for index, file_id in enumerate(movie["file_ids"], start=1):
-            keyboard.append([InlineKeyboardButton(f"အပိုင်း {index}", callback_data=f"vid_{data}_{index-1}")])
-        
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        
-        await context.bot.send_photo(
-            chat_id=query.message.chat_id,
-            photo=movie["photo"],
-            caption=f"📌 **{movie['title']}**\nအောက်ပါ အပိုင်းခလုတ်များကို နှိပ်၍ ဗီဒီယိုကို တိုက်ရိုက်ကြည့်ရှုနိုင်ပါသည် -",
-            reply_markup=reply_markup,
-            parse_mode="Markdown"
-        )
-
-    elif data.startswith("vid_"):
-        parts = data.split("_")
-        movie_key = parts[1]
-        ep_index = int(parts[2])
-        
-        if movie_key in MOVIES_DATABASE:
-            file_id = MOVIES_DATABASE[movie_key]["file_ids"][ep_index]
-            movie_title = MOVIES_DATABASE[movie_key]["title"]
-            ep_num = ep_index + 1
+    try:
+        # The Flash နှိပ်ပါက အပိုင်း (၁) မှ (၆) အထိ Free၊ ၇ နှင့်အထက် VIP ပေါ်လာမည်
+        if data == "m1":
+            keyboard = [
+                [InlineKeyboardButton("အပိုင်း (၁) - Free", callback_data="ep_1")],
+                [InlineKeyboardButton("အပိုင်း (၂) - Free", callback_data="ep_2")],
+                [InlineKeyboardButton("အပိုင်း (၃) - Free", callback_data="ep_3")],
+                [InlineKeyboardButton("အပိုင်း (၄) - Free", callback_data="ep_4")],
+                [InlineKeyboardButton("အပိုင်း (၅) - Free", callback_data="ep_5")],
+                [InlineKeyboardButton("အပိုင်း (၆) - Free", callback_data="ep_6")],
+                [InlineKeyboardButton("အပိုင်း (၇) နှင့်အထက် - VIP", callback_data="vip_locked")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
             
-            await context.bot.send_video(
-                chat_id=query.message.chat_id,
-                video=file_id,
-                caption=f"📌 {movie_title} - အပိုင်း {ep_num}\n\n💬 **VIP မန်ဘာဝင်ရန်:** {CONTACT_USERNAME}",
+            await query.message.reply_text(
+                "📌 **The Flash (2014)**\n\n"
+                "• အပိုင်း (၁) မှ (၆) အထိ အလကား (Free) ကြည့်ရှုနိုင်ပါသည်။\n"
+                "• ပို့ပေးသော ဗီဒီယိုများသည် **(၆) နာရီကြာပါက** အလိုအလျောက် ပျက်သွားပါမည်။\n"
+                "• အပိုင်းအသစ်များနှင့် ကျန်အပိုင်းများကို ကြည့်ရှုလိုပါက VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n\n"
+                "အောက်ပါ အပိုင်းများကို ရွေးချယ်ပါ -",
+                reply_markup=reply_markup,
                 parse_mode="Markdown"
             )
+
+        # အပိုင်း (၁) မှ (၆) အထိ ဗီဒီယို File ID များကို ဤနေရာတွင် ထည့်ပါ 👇
+        elif data == "ep_1":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXlV_al9eVk62LzCTrKjv_7BEv0WtD84AAiQeAAKFy4FUXJNsFXuqRPEBAAdtAAM9BA",
+                caption="🎬 The Flash (2014) - အပိုင်း (၁)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "ep_2":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXl5Qal9l8QAB-eBpKsJe-DECTOQgKQ77AAIlHgAChcuBVK49jZTQRMVjAQAHbQADPQQ",
+                caption="🎬 The Flash (2014) - အပိုင်း (၂)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "ep_3":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXl5-al9mFiIMkV1nc2RucvmJodK_ULoAAiYeAAKFy4FUNRtZ8dDMvisBAAdtAAM9BA",
+                caption="🎬 The Flash (2014) - အပိုင်း (၃)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "ep_4":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA",
+                caption="🎬 The Flash (2014) - အပိုင်း (၄)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "ep_5":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXl9Nal9m22u3eqv_ckXtOZQcONYNa0AAAtcjAAJZxHhUy55L6Rw8zuoBAAdtAAM9BA",
+                caption="🎬 The Flash (2014) - အပိုင်း (၅)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        elif data == "ep_6":
+            sent_msg = await context.bot.send_video(
+                chat_id=query.message.chat_id,
+                video="AAMCBQADGQEDXl8-al9m0URt8_QaItigKtAt9NYDt-IAAiseAAKFy4FUtGnma9kwiGUBAAdtAAM9BA",
+                caption="🎬 The Flash (2014) - အပိုင်း (၆)\n\n⚠️ ဤဗီဒီယိုသည် ၆ နာရီကြာပါက အလိုအလျောက် ပျက်သွားပါမည်။"
+            )
+            schedule_deletion(context, sent_msg)
+
+        # VIP အပိုင်းများအတွက် မန်ဘာဝင်ရန် ဆက်သွယ်ခိုင်းခြင်း
+        elif data == "vip_locked":
+            keyboard = [
+                [InlineKeyboardButton("💬 မန်ဘာဝင်ရန် ဆက်သွယ်ရန်", url=f"https://t.me/{CONTACT_USERNAME.replace('@', '')}")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            
+            await query.message.reply_text(
+                f"🔒 **VIP အပိုင်းများ (အပိုင်း ၇ နှင့်အထက်)**\n\n"
+                f"⚠️ ဤ အပိုင်းများကို ကြည့်ရှုရန်အတွက် VIP မန်ဘာဝင်ရန် လိုအပ်ပါသည်။\n"
+                f"မန်ဘာဝငပိုင်း ခလုတ်ကို နှိပ်၍ Owner ထံသို့ ဆက်သွယ်နိုင်ပါသည် -",
+                reply_markup=reply_markup,
+                parse_mode="Markdown"
+            )
+            
+    except Exception as e:
+        await query.message.reply_text(f"⚠️ Error: {str(e)}")
+
+# ၆ နာရီ (စက္ကန့် ၂၁၆၀၀) ကြာလျှင် ပို့ထားသောဗီဒီယိုကို အလိုအလျောက် ဖျက်ပေးမည့် စနစ်
+def schedule_deletion(context, sent_msg):
+    async def delete_msg():
+        await asyncio.sleep(21600)  # 6 hours = 21600 seconds
+        try:
+            await context.bot.delete_message(chat_id=sent_msg.chat_id, message_id=sent_msg.message_id)
+        except Exception:
+            pass
+    context.application.create_task(delete_msg())
 
 if __name__ == '__main__':
     TOKEN = "8954957485:AAEZbI58ShdA6r1lNecuPBiGCe5ym2XKe4s"
     application = ApplicationBuilder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
-    print("Bot is starting cleanly...")
+    print("Bot is running...")
     application.run_polling(drop_pending_updates=True)
-    
+        
